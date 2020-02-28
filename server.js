@@ -55,9 +55,13 @@ app.use((req, res, next) => {
 	next();
 });
 
-// Routes
+//* Routes*
+//Login Route
 app.use(process.env.API_BASE_PATH, require("./routes/user.route"));
+//Request Route
 app.use(process.env.API_BASE_PATH, require("./routes/request.route"));
+//Register Route
+app.use(process.env.API_BASE_PATH, require("./routes/register.route"));
 
 // Default Route
 /* app.use("*", (req, res, next) => {
