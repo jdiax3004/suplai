@@ -8,9 +8,18 @@ const RequestSchema = new Schema({
 	status: { type: String, required: true },
 	dateCreated: { type: Date, required: true, default: Date.now() },
 	owner: {
-		type: mongoose.Schema.Types.ObjectId, //_id
+		type: mongoose.Schema.Types.ObjectId, //_id of Buyer
 		required: true,
 		ref: "User" //User
+	},
+	boss_owner:{
+		type:mongoose.Schema.Types.ObjectId, //_id of Boss
+		required:true,
+		ref:"User"
+	},
+	financer_owner:{
+		type:mongoose.Schema.Types.ObjectId,
+		ref:"User"
 	}
 });
 

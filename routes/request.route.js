@@ -30,7 +30,8 @@ router.post("/addRequest", ensureAuthenticated, async (req, res) => {
 		//Validation passed
 		const request = new Request({
 			...req.body,
-			owner: req.user._id
+			owner: req.user._id,
+			boss_owner: req.user.buyerInfo.boss._id
 		});
 
 		try {
@@ -43,4 +44,8 @@ router.post("/addRequest", ensureAuthenticated, async (req, res) => {
 	}
 });
 
+//Accept Request as a Boss and transfer to financer (WIP)
+router.post("/acceptRequest", ensureAuthenticated, async (req, res) => {
+	res.send("hey");
+});
 module.exports = router;
