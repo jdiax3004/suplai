@@ -248,7 +248,7 @@ router.post("/register/financer", (req, res) => {
 		res.send(errors);
 	} else {
 		//Validation Passed
-		Financer.findOne({ email: email }).then(user => {
+		User.findOne({ email: email }).then(user => {
 			if (user) {
 				//User Exists
 				errors.push({
