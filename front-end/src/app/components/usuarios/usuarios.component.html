@@ -56,10 +56,10 @@
                     <td>{{ usuario._id | slice: -5 }}</td>
                     <td>{{ usuario.name + " " + usuario.last_name }}</td>
                     <td>
-                      {{ usuario.boss.name + " " + usuario.boss.last_name }}
+                      {{ usuario.boss?.name + " " + usuario.boss?.last_name | avoidNull}}
                     </td>
                     <td>{{ usuario.email }}</td>
-                    <td>{{ usuario.type }}</td>
+                    <td>{{ usuario.type | userRole }}</td>
                   </tr>
                 </tbody>
               </table>

@@ -25,7 +25,7 @@
               <div class="text-center">
                 <img
                   class="profile-user-img img-fluid img-circle"
-                  src="../../dist/img/user4-128x128.jpg"
+                  src="../../../assets/dist/img/avatar-default.png"
                   alt="User profile picture"
                 />
               </div>
@@ -33,8 +33,9 @@
               <h3 class="profile-username text-center">
                 {{ usuario.name + " " + usuario.last_name }}
               </h3>
-
-              <p class="text-muted text-center">{{ usuario.type }}</p>
+              <p class="text-muted text-center">{{ usuario.email }}</p>
+              <p class="text-muted text-center">{{ usuario.status | userStatus}}</p>
+              <p class="text-muted text-center">{{ usuario.type | userRole }}</p>
             </div>
             <!-- /.card-body -->
           </div>
@@ -104,7 +105,7 @@
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Contraseña:</label>
                     <input
-                      type="text"
+                      type="password"
                       class="form-control"
                       id="exampleFormControlInput1"
                       placeholder="contrasena"

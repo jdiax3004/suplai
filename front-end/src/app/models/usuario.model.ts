@@ -6,5 +6,5 @@ export class UsuarioModel {
   email: string;
   password: string;
   type: string;
-  boss: string;
+  boss?: string;
 }

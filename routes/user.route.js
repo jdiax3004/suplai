@@ -50,7 +50,7 @@ router.get("/users", async (req, res) => {
 
 // [POST] Create User
 router.post("/register", (req, res) => {
-	const { name, last_name, email, password, type, boss } = req.body;
+	const { name, last_name, email, password, type, boss, tier } = req.body;
 	let errors = [];
 
 	//Check required fields
@@ -87,7 +87,8 @@ router.post("/register", (req, res) => {
 					email: email,
 					password: password,
 					type: type,
-					boss: boss
+					boss: boss,
+					tier: tier
 				});
 				//Hash Password
 				bcrypt.genSalt(10, (err, salt) =>

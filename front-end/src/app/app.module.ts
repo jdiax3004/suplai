@@ -19,6 +19,10 @@ import { AgregarRequisicionComponent } from "./components/agregar-requisicion/ag
 import { HttpClientModule } from "@angular/common/http";
 import { UsuarioComponent } from "./components/usuario/usuario.component";
 import { RequisicionComponent } from "./components/requisicion/requisicion.component";
+import { StatusPipe } from './pipes/status.pipe';
+import { UserStatusPipe } from './pipes/user-status.pipe';
+import { UserRolePipe } from './pipes/user-role.pipe';
+import { AvoidNullPipe } from './pipes/avoid-null.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,11 @@ import { RequisicionComponent } from "./components/requisicion/requisicion.compo
     AgregarUsuarioComponent,
     AgregarRequisicionComponent,
     UsuarioComponent,
-    RequisicionComponent
+    RequisicionComponent,
+    StatusPipe,
+    UserStatusPipe,
+    UserRolePipe,
+    AvoidNullPipe
   ],
   imports: [
     BrowserModule,

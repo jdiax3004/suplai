@@ -8,6 +8,7 @@ const UserSchema = new Schema({
 	password: { type: String, required: true },
 	type: { type: String, required: true },
 	status: { type: Boolean, required: true, default: true },
+	tier:{type: String, default: ""},
 	boss: { type: Schema.Types.ObjectId, ref: "User" }
 });
 

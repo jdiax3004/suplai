@@ -7,7 +7,9 @@ const RequisitionSchema = new Schema({
 	budget: { type: Number, required: true },
 	status: { type: Number, required: true, default: 0 },
 	dateCreated: { type: Date, required: true, default: Date.now() },
+	checker: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+
 });
 
 module.exports = mongoose.model("Requisition", RequisitionSchema);
