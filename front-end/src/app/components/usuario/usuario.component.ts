@@ -3,6 +3,9 @@ import { ActivatedRoute } from "@angular/router";
 import { UsuariosService } from "../../services/usuarios.service";
 import { UsuarioModel } from "../../models/usuario.model";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+//ToastrService
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-usuario",
@@ -19,7 +22,8 @@ export class UsuarioComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private toastr: ToastrService
   ) {
     this.router.params.subscribe(params => {
       this.id = params["id"];
@@ -58,6 +62,8 @@ export class UsuarioComponent implements OnInit {
     this.usuariosService
       .editarUsuario(this.forma.value, this.id)
       .subscribe(data => console.log(data));
+    //notification
+    this.toastr.success("¡Cambios guardados de manera exitosa!", "¡Exito!");
   }
 
   seleccionarUsuario(tipoUsuario: string) {

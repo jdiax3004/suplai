@@ -123,17 +123,18 @@ router.post("/requisition", ensureAuthenticated, (req, res) => {
 // [PUT] Update Requisition
 router.put("/requisition/:id", async (req, res) => {
 	try {
-		const requesition = await Requisition.findByIdAndUpdate(
+		const requisition = await Requisition.findByIdAndUpdate(
 			req.params.id,
 			req.body,
 			{
 				new: true
 			}
 		);
-		if (!requesition) {
+		if (!requisition) {
 			res.status(404).send();
 		}
-		res.send(requesition);
+		res.send(requisition);
+		notifyRequisitionUpdate(requisition);
 	} catch (error) {
 		res.status(404).send(e);
 	}
@@ -161,17 +162,17 @@ router.put("/requisitionFinancer/:id", async (req, res) => {
 		);
 
 		console.log(financerID._id);
-		const requesition = await Requisition.findByIdAndUpdate(
+		const requisition = await Requisition.findByIdAndUpdate(
 			req.params.id,
 			{ checker: financerID._id },
 			{
 				new: true
 			}
 		);
-		if (!requesition) {
+		if (!requisition) {
 			res.status(404).send();
 		}
-		res.send(requesition);
+		res.send(requisition);
 	} catch (error) {
 		res.status(404).send(error);
 	}
@@ -274,6 +275,57 @@ async function notifyBossNewRequisition(newReq) {
 		// plain text body
 
 		html: outputnewreq // html body
+	});
+	console.log("Message sent: %s", info.messageId);
+	// Message sent: <blabla@example.com>
+}
+//Notify Buyer about a Requisition Update
+async function notifyRequisitionUpdate(requisition) {
+	const checker = await User.findById(requisition.checker._id);
+	const buyer = await User.findById(requisition.owner._id);
+	const isDenied = requisition.status === 3 ? "Denegada" : "Aprobada";
+	const isBoss =
+		checker.type === "BOSS"
+			? "Jefe Aprobador"
+			: "Aprobador Financiero";
+	const emailsuplai = "noreplysuplaicr@gmail.com";
+	const requisitionurl =
+		"http://localhost:4200/requisicion/" + requisition._id;
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: "noreplysuplaicr@gmail.com", // generated ethereal user
+			pass: "suplainoreply123" // generated ethereal password
+		}
+	});
+	// send mail with defined transport object
+	const outputaboutrequest = `
+									<h3>Hola ${buyer.name},</h3>
+									<p>Hay novedades con respecto a su requisicion [ID: ${requisition._id}],</p>
+									<p>Le informamos que su requisicion ha sido ${isDenied} por el ${isBoss} '${checker.name} [ID: ${checker._id}]' </p>
+									<p>(Titulo: ${requisition.title}):</p>
+									<p>ID Requisicion: ${requisition._id}</p>
+									<p>Estado:<strong>${isDenied} por ${isBoss} ${checker.name} [ID: ${checker._id}] </strong> </p>
+									<p>Para proceder a evaluar esta solicitud con mayor detalle, puede ingresar al siguiente enlace:</p>
+									<p>${requisitionurl}</p>
+									<h4>Estamos para Servirle,</h4>
+									<p>Equipo de Suplai</p>
+									`;
+	let info = transporter.sendMail({
+		from: '"Equipo de Suplai " ' + emailsuplai, // sender address
+		to: buyer.email, // list of receivers
+		subject:
+			checker.name +
+			", Novedades sobre su requisicion [ID:" +
+			requisition._id +
+			"]", // Subject line
+		/* text:
+		 *         "", */
+		// plain text body
+
+		html: outputaboutrequest // html body
 	});
 	console.log("Message sent: %s", info.messageId);
 	// Message sent: <blabla@example.com>

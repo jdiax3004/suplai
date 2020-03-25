@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsuariosService } from "../../services/usuarios.service";
+//ToastrService
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrService } from "ngx-toastr";
 @Component({
@@ -38,6 +39,7 @@ export class AgregarUsuarioComponent implements OnInit {
     this.usuariosService
       .crearUsuario(this.forma.value)
       .subscribe(data => console.log(data));
+      //notification
     this.toastr.success("¡Usuario guardado exitosamente!", "¡Exito!");
   }
 

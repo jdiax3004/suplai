@@ -132,6 +132,12 @@ router.post("/register", (req, res) => {
 // [PUT] Update User
 router.put("/user/:id", async (req, res) => {
 	try {
+		if (req.body.password) {
+			req.body.password = await bcrypt.hash(
+				req.body.password,
+				10
+			);
+		}
 		const user = await User.findByIdAndUpdate(
 			req.params.id,
 			req.body,
@@ -143,8 +149,9 @@ router.put("/user/:id", async (req, res) => {
 			res.status(404).send();
 		}
 		res.send(user);
+		sendUpdateNotification(user);
 	} catch (error) {
-		res.status(404).send(e);
+		res.status(404).send(error);
 	}
 });
 
@@ -207,6 +214,40 @@ function sendWelcome(user) {
 	const outputwelcome = `
 									<h3>Hola, ${user.name}</h3>
 									<p>Le damos una bienvenida por parte del equipo de Suplai. Estamos felices de que haya escogido nuestros servicios. Esperemos que pueda tener una experiencia increible en nuestra plataforma.</p>
+									<h4>Estamos para Servirle,</h4>
+									<p>Equipo de Suplai</p>
+									`;
+	let info = transporter.sendMail({
+		from: '"Equipo de Suplai " <' + emailsuplai + ">", // sender address
+		to: user.email, // list of receivers
+		subject: "Bienvenido, " + user.name, // Subject line
+		/* text:
+		 *         "", */
+		// plain text body
+
+		html: outputwelcome // html body
+	});
+	console.log("Message sent: %s", info.messageId);
+	// Message sent: <blabla@example.com>
+}
+//Automated Notification Regarding User Modifications
+function sendUpdateNotification(user) {
+	const userprofileurl = "http://localhost:4200/usuario/" + user._id;
+	const emailsuplai = "noreplysuplaicr@gmail.com";
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: "noreplysuplaicr@gmail.com", // generated ethereal user
+			pass: "suplainoreply123" // generated ethereal password
+		}
+	});
+	// send mail with defined transport object
+	const outputwelcome = `
+									<h3>Hola, ${user.name}</h3>
+									<p>Hemos notado que se han realizado cambios recientes a su informacion de usuario. Para mayor informacion, haga click en el siguiente enlace:</p>
+									<p>${userprofileurl}</p>
 									<h4>Estamos para Servirle,</h4>
 									<p>Equipo de Suplai</p>
 									`;
