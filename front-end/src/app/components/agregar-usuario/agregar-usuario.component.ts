@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsuariosService } from "../../services/usuarios.service";
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-agregar-usuario",
   templateUrl: "./agregar-usuario.component.html",
@@ -12,7 +13,10 @@ export class AgregarUsuarioComponent implements OnInit {
   selectUsuario: string;
 
   forma: FormGroup;
-  constructor(private usuariosService: UsuariosService) {
+  constructor(
+    private usuariosService: UsuariosService,
+    private toastr: ToastrService
+  ) {
     this.forma = new FormGroup({
       nombre: new FormControl("", Validators.required),
       apellidos: new FormControl("", Validators.required),
@@ -34,6 +38,7 @@ export class AgregarUsuarioComponent implements OnInit {
     this.usuariosService
       .crearUsuario(this.forma.value)
       .subscribe(data => console.log(data));
+    this.toastr.success("¡Usuario guardado exitosamente!", "¡Exito!");
   }
 
   seleccionarUsuario(tipoUsuario: string) {

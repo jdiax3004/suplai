@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
+import { ToastrModule } from "ngx-toastr";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -19,10 +20,10 @@ import { AgregarRequisicionComponent } from "./components/agregar-requisicion/ag
 import { HttpClientModule } from "@angular/common/http";
 import { UsuarioComponent } from "./components/usuario/usuario.component";
 import { RequisicionComponent } from "./components/requisicion/requisicion.component";
-import { StatusPipe } from './pipes/status.pipe';
-import { UserStatusPipe } from './pipes/user-status.pipe';
-import { UserRolePipe } from './pipes/user-role.pipe';
-import { AvoidNullPipe } from './pipes/avoid-null.pipe';
+import { StatusPipe } from "./pipes/status.pipe";
+import { UserStatusPipe } from "./pipes/user-status.pipe";
+import { UserRolePipe } from "./pipes/user-role.pipe";
+import { AvoidNullPipe } from "./pipes/avoid-null.pipe";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AvoidNullPipe } from './pipes/avoid-null.pipe';
     FormsModule,
     ReactiveFormsModule,
     FormsModule,
+    ToastrModule.forRoot(),
     HttpClientModule
   ],
   providers: [],
