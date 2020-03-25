@@ -1,10 +1,13 @@
 //Libraries
 const express = require("express");
+const exphbs = require("express-handlebars");
+const nodemailer = require("nodemailer");
 const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const app = express();
 
 //Passport config
@@ -21,6 +24,9 @@ app.use(
 		credentials: true
 	})
 );
+//BodyParser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.json());
 
@@ -56,11 +62,9 @@ app.use(process.env.API_BASE_PATH, require("./routes/requisition.route"));
 
 // Default Route
 app.use("*", (req, res, next) => {
-          if (!req.originalUrl.includes(process.env.API_BASE_PATH))
-                  res.sendFile(
-                          path.join(__dirname, "public", "index.html")
-                  );
-          else next();
-  });
+	if (!req.originalUrl.includes(process.env.API_BASE_PATH))
+		res.sendFile(path.join(__dirname, "public", "index.html"));
+	else next();
+});
 
 module.exports = app;

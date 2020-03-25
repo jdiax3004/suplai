@@ -1,9 +1,11 @@
 //Libraries
 const express = require("express");
+const exphbs = require("express-handlebars");
+const nodemailer = require("nodemailer");
 const router = express.Router();
+const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
-
 //Methods
 const { ensureAuthenticated } = require("../auth");
 
@@ -110,6 +112,9 @@ router.post("/register", (req, res) => {
 										"New User Added: " +
 											email
 									);
+									sendWelcome(
+										user
+									);
 								})
 								.catch(err =>
 									console.log(
@@ -186,5 +191,37 @@ router.post("/login", function(req, res, next) {
 		});
 	})(req, res, next);
 });
+//Automated Welcome Email
+function sendWelcome(user) {
+	const emailsuplai = "noreplysuplaicr@gmail.com";
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: "noreplysuplaicr@gmail.com", // generated ethereal user
+			pass: "suplainoreply123" // generated ethereal password
+		}
+	});
+	// send mail with defined transport object
+	const outputwelcome = `
+									<h3>Hola, ${user.name}</h3>
+									<p>Le damos una bienvenida por parte del equipo de Suplai. Estamos felices de que haya escogido nuestros servicios. Esperemos que pueda tener una experiencia increible en nuestra plataforma.</p>
+									<h4>Estamos para Servirle,</h4>
+									<p>Equipo de Suplai</p>
+									`;
+	let info = transporter.sendMail({
+		from: '"Equipo de Suplai " <' + emailsuplai + ">", // sender address
+		to: user.email, // list of receivers
+		subject: "Bienvenido, " + user.name, // Subject line
+		/* text:
+		 *         "", */
+		// plain text body
+
+		html: outputwelcome // html body
+	});
+	console.log("Message sent: %s", info.messageId);
+	// Message sent: <blabla@example.com>
+}
 
 module.exports = router;

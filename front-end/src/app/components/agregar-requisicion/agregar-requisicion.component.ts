@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ReqisicionesService } from "../../services/reqisiciones.service";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-agregar-requisicion",
@@ -9,7 +11,10 @@ import { ReqisicionesService } from "../../services/reqisiciones.service";
 })
 export class AgregarRequisicionComponent implements OnInit {
   forma: FormGroup;
-  constructor(public requsicionesService: ReqisicionesService) {
+  constructor(
+    public requsicionesService: ReqisicionesService,
+    private toastr: ToastrService
+  ) {
     this.forma = new FormGroup({
       title: new FormControl("", Validators.required),
       budget: new FormControl("", Validators.required),
@@ -26,5 +31,6 @@ export class AgregarRequisicionComponent implements OnInit {
     this.requsicionesService
       .crearRequisicion(this.forma.value)
       .subscribe(data => console.log(data));
+    this.toastr.success("¡Requisicion creada exitosamente!", "¡Exito!");
   }
 }

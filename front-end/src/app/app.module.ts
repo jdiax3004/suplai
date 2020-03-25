@@ -24,6 +24,7 @@ import { StatusPipe } from "./pipes/status.pipe";
 import { UserStatusPipe } from "./pipes/user-status.pipe";
 import { UserRolePipe } from "./pipes/user-role.pipe";
 import { AvoidNullPipe } from "./pipes/avoid-null.pipe";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AvoidNullPipe } from "./pipes/avoid-null.pipe";
     FormsModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HttpClientModule
   ],
