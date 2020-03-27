@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { RequisicionModel } from "../models/requesicion.model";
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -33,6 +33,15 @@ export class ReqisicionesService {
       {
         withCredentials: true,
         headers: new HttpHeaders().append("Content-Type", "application/json")
+      }
+    );
+  }
+
+  aprobarRequisicionJefeAprobador(requisicion: any) {
+    return this.http.put(
+      environment.API_PATH + "/requisition/" + requisicion._id,
+      {
+        status: 1
       }
     );
   }
