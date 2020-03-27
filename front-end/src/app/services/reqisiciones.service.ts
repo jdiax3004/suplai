@@ -42,6 +42,10 @@ export class ReqisicionesService {
       environment.API_PATH + "/requisition/" + requisicion._id,
       {
         status: 1
+      },
+      {
+        withCredentials: true,
+        headers: new HttpHeaders().append("Content-Type", "application/json")
       }
     );
   }

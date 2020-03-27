@@ -14,7 +14,8 @@ const User = require("../models/user");
 
 //[GET] Read Requisitions
 router.get("/requisitions", ensureAuthenticated, async (req, res) => {
-  try {
+	console.log(req.user.type)
+	try {
     var requisitions;
     if (req.user.type == "ADMIN") {
       var requisitions = await Requisition.find().populate({
@@ -95,11 +96,19 @@ router.post("/requisition", ensureAuthenticated, (req, res) => {
 });
 
 // [PUT] Update Requisition
-router.put("/requisition/:id", async (req, res) => {
+router.put("/requisition/:id", ensureAuthenticated, async (req, res) => {
   try {
-    //Assign Financer Logic
+	//Assign Financer Logic
+	console.log("Jili")
+	console.log(req.user.type)
+	console.log("Jili")
     if (req.user.type == "BOSS") {
-      var budget = req.body.budget;
+      const budget = await Requisition.findById(
+        req.params.id,
+        "budget",
+        function(err, docs) {}
+	  );
+
       var tierUser = "";
 
       if (budget <= 100000) {
@@ -145,7 +154,7 @@ router.put("/requisition/:id", async (req, res) => {
       notifyRequisitionUpdate(requisition);
     }
   } catch (error) {
-    res.status(404).send(e);
+    res.status(404).send(error);
   }
 });
 
