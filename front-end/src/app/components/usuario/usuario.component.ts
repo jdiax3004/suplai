@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { UsuariosService } from "../../services/usuarios.service";
 import { UsuarioModel } from "../../models/usuario.model";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
@@ -23,6 +23,7 @@ export class UsuarioComponent implements OnInit {
   constructor(
     private router: ActivatedRoute,
     private usuariosService: UsuariosService,
+    private navRouter: Router,
     private toastr: ToastrService
   ) {
     this.router.params.subscribe(params => {
@@ -59,11 +60,18 @@ export class UsuarioComponent implements OnInit {
   guardarCambios() {
     console.log(this.forma.value);
     console.log(this.forma);
-    this.usuariosService
-      .editarUsuario(this.forma.value, this.id)
-      .subscribe(data => console.log(data));
+    this.usuariosService.editarUsuario(this.forma.value, this.id).subscribe(
+      data => {
+        console.log(data);
+
+        this.toastr.success("¡Cambios guardados de manera exitosa!", "¡Exito!");
+        this.navRouter.navigate(["/usuarios"]);
+      },
+      error => {
+        this.toastr.error(error.error[0].msg, "¡Error!");
+      }
+    );
     //notification
-    this.toastr.success("¡Cambios guardados de manera exitosa!", "¡Exito!");
   }
 
   seleccionarUsuario(tipoUsuario: string) {
