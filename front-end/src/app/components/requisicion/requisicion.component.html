@@ -33,11 +33,11 @@
             <div class="row">
               <div class="col-12">
                 <h4>
-                  <i class="fas fa-file-signature"></i> Requesición#
-                  {{ this.requisicion._id }}
+                  <i class="fas fa-file-signature"></i> Requesición# {{
+                  this.requisicion._id }}
                   <small class="float-right"
-                    >Fecha Creada:
-                    {{ this.requisicion.dateCreated | date: "MM/dd/yy" }}</small
+                    >Fecha Creada: {{ this.requisicion.dateCreated | date:
+                    "MM/dd/yy" }}</small
                   >
                 </h4>
               </div>
@@ -56,8 +56,8 @@
                     <tr>
                       <th style="width:50%">Solicitante:</th>
                       <td>
-                        {{ this.requisicion.owner.name }}
-                        {{ this.requisicion.owner.last_name }}
+                        {{ this.requisicion.owner.name }} {{
+                        this.requisicion.owner.last_name }}
                       </td>
                     </tr>
                     <tr>
@@ -71,9 +71,9 @@
                     <tr>
                       <th>Estado:</th>
                       <td>
-                        <span class="badge badge-warning">{{
-                          this.requisicion.status | status
-                        }}</span>
+                        <span class="badge badge-warning"
+                          >{{ this.requisicion.status | status }}</span
+                        >
                       </td>
                     </tr>
                     <tr>
@@ -97,9 +97,9 @@
                   ><i class="fas fa-print"></i> Imprimir</a
                 >
                 <button
-                  [routerLink]="['/requisiciones']"
                   type="button"
                   class="btn btn-danger float-right"
+                  (click)="rechazar()"
                 >
                   <i class="fas fa-times"></i> Rechazar
                 </button>

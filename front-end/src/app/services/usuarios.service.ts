@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsuarioModel } from "../models/usuario.model";
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -32,7 +32,7 @@ export class UsuariosService {
 
   editarUsuario(usuario: any, id) {
     console.log(usuario.name);
-    return this.http.put( environment.API_PATH + "/user/" + id, {
+    return this.http.put(environment.API_PATH + "/user/" + id, {
       name: usuario.nombre,
       last_name: usuario.apellidos,
       email: usuario.correo,
@@ -55,9 +55,6 @@ export class UsuariosService {
   }
 
   getCurrent() {
-    return this.http.get(
-      environment.API_PATH + "/current"
-    );
+    return this.http.get(environment.API_PATH + "/current");
   }
-
 }

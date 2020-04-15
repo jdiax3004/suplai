@@ -39,12 +39,13 @@ export class AgregarUsuarioComponent implements OnInit {
     console.log(this.forma.value);
     console.log(this.forma);
     this.usuariosService.crearUsuario(this.forma.value).subscribe(
-      data => {
-        console.log(data);
+      next => {
+        debugger;
         this.router.navigate(["/home"]);
         this.toastr.success("¡Usuario guardado exitosamente!", "¡Exito!");
       },
       error => {
+        debugger;
         this.toastr.error(error.error[0].msg, "¡Error!");
         console.log(error.error[0].msg);
       }
