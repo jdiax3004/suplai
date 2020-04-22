@@ -14,17 +14,17 @@ const User = require("../models/user");
 
 //[GET] Read Requisitions
 router.get("/requisitions", ensureAuthenticated, async (req, res) => {
-	console.log(req.user.type)
+  console.log(req.user.type)
 	try {
     var requisitions;
-    if (req.user.type == "ADMIN") {
+    if (req.user.type.toUpperCase()== "ADMIN") {
       var requisitions = await Requisition.find().populate({
         path: "owner",
         populate: {
           path: "boss"
         }
       });
-    } else if (req.user.type == "BUYER") {
+    } else if (req.user.type.toUpperCase() == "BUYER") {
       var requisitions = await Requisition.find({
         owner: req.user._id
       }).populate({
