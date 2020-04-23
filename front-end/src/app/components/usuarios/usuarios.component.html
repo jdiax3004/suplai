@@ -38,7 +38,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
-              <table class="table table-head-fixed text-nowrap">
+              <table class="table table-head-fixed text-nowrap table-hover">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -56,7 +56,8 @@
                     <td>{{ usuario._id | slice: -5 }}</td>
                     <td>{{ usuario.name + " " + usuario.last_name }}</td>
                     <td>
-                      {{ usuario.boss?.name + " " + usuario.boss?.last_name | avoidNull}}
+                      {{ usuario.boss?.name + " " + usuario.boss?.last_name |
+                      avoidNull}}
                     </td>
                     <td>{{ usuario.email }}</td>
                     <td>{{ usuario.type | userRole }}</td>

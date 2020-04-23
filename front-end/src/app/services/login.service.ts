@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "./auth.service";
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -17,8 +17,7 @@ export class LoginService {
         password: password
       },
       {
-        withCredentials: true,
-        headers: new HttpHeaders().append("Content-Type", "application/json")
+        withCredentials: true
       }
     );
   }

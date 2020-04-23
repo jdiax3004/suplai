@@ -37,11 +37,25 @@ export class ReqisicionesService {
     );
   }
 
-  aprobarRequisicionJefeAprobador(requisicion: any) {
+  aprobarRequisicion(requisicion: any, type: string) {
+    let statusValue = type === "BOSS" ? 1 : 2;
     return this.http.put(
       environment.API_PATH + "/requisition/" + requisicion._id,
       {
-        status: 1
+        status: statusValue
+      },
+      {
+        withCredentials: true,
+        headers: new HttpHeaders().append("Content-Type", "application/json")
+      }
+    );
+  }
+
+  rechazarRequisicion(requisicion: any) {
+    return this.http.put(
+      environment.API_PATH + "/requisition/" + requisicion._id,
+      {
+        status: 3
       },
       {
         withCredentials: true,
