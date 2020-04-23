@@ -26,6 +26,7 @@
               <div class="card-tools">
                 <div>
                   <button
+                    *ngIf="auth.currentUser.type == 'BUYER'"
                     type="button"
                     class="btn btn-block btn-success"
                     [routerLink]="['/agregarRequisicion']"

@@ -21,7 +21,4 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  getName(){
-    return window.localStorage.getItem("name");
-  }
 }

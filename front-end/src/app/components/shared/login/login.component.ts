@@ -22,10 +22,13 @@ export class LoginComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.loginService.logIn(form.value.email, form.value.password).subscribe(
       (data: UsuarioModel) => {
-        console.log(data.name);
-        window.localStorage.setItem("name", data.name + " " + data.last_name);
         this.auth.currentUser = data;
-        this.router.navigate(["/home"]);
+        if(data.type == "admin"){
+          this.router.navigate(["/home"]);
+        }else{
+          this.router.navigate(["/requisiciones"]);
+        }
+        
       },
       err => {
         console.log(err);

@@ -16,7 +16,8 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="info">
-        <h5 class="nav d-block"> <i class="nav-icon fas fa-user-circle"> </i>  {{ getName() }}</h5>
+        <h5 class="nav d-block"> <i class="nav-icon fas fa-user-circle"> </i>  {{ auth.currentUser.name + " " + auth.currentUser.last_name }}</h5>
+        <p class="nav d-block subtitle">{{ auth.currentUser.type | userRole }}</p>
       </div>
     </div>
 
@@ -30,7 +31,7 @@
       >
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="auth.currentUser.type == 'admin'">
           <a
             [routerLink]="['/home']"
             routerLinkActive="active"
@@ -73,7 +74,7 @@
           class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
-              Reportes  <span class="right badge badge-danger">Próximamente!</span>
+              Reportes
 
             </p>
           </a>

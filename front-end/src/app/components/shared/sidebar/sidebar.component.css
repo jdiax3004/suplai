@@ -4,6 +4,15 @@
   justify-content: center;
 }
 
-h5 {
+h5{
   color: white !important;
 }
+
+.subtitle {
+  color: white !important;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+
+
