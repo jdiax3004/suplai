@@ -16,7 +16,9 @@ export class UsuariosService {
   }
 
   obtenerUsuarioPorID(id: string) {
-    return this.http.get(environment.API_PATH + "/users/" + id);
+    return this.http.get(environment.API_PATH + "/users/" + id, {
+      withCredentials: true,
+    });
   }
 
   crearUsuario(usuario: any) {
