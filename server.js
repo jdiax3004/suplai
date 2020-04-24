@@ -19,10 +19,10 @@ app.set("view engine", "html");
 
 // Middlewares
 app.use(
-  cors({
-    origin: ["http://localhost:4200", "http://127.0.0.1:4200"],
-    credentials: true,
-  })
+	cors({
+		origin: ["http://localhost:4200", "http://127.0.0.1:4200"],
+		credentials: true
+	})
 );
 //BodyParser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,15 +38,15 @@ app.use(express.urlencoded({ extended: false }));
 
 //Express Session Middleware
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: false,
-      secure: false,
-    },
-  })
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: true,
+		saveUninitialized: true,
+		cookie: {
+			httpOnly: false,
+			secure: false
+		}
+	})
 );
 
 //Passport Middleware
@@ -58,12 +58,13 @@ app.use(cookieParser());
 // Routes
 app.use(process.env.API_BASE_PATH, require("./routes/user.route"));
 app.use(process.env.API_BASE_PATH, require("./routes/requisition.route"));
+app.use(process.env.API_BASE_PATH, require("./routes/stats.route"));
 
 // Default Route
 app.use("*", (req, res, next) => {
-  if (!req.originalUrl.includes(process.env.API_BASE_PATH))
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-  else next();
+	if (!req.originalUrl.includes(process.env.API_BASE_PATH))
+		res.sendFile(path.join(__dirname, "public", "index.html"));
+	else next();
 });
 
 module.exports = app;
