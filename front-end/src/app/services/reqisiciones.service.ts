@@ -63,4 +63,13 @@ export class ReqisicionesService {
       }
     );
   }
+
+
+  obtenerRequisionesStats(params) {
+    return this.http.get(environment.API_PATH + "/requisitions/stats", {
+      params,
+      withCredentials: true
+    });
+  }
+  
 }

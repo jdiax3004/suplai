@@ -67,7 +67,7 @@
             </p>
           </a>
         </li>
-        <li class="nav-item" *ngIf="auth.currentUser.type !== 'BUYER'">
+        <li class="nav-item" *ngIf="auth.currentUser.type == 'FINANCER' || auth.currentUser.type == 'BOSS'">
           <a             
           [routerLink]="['/reportes']"
           routerLinkActive="active"

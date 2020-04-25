@@ -23,13 +23,13 @@
       <div class="col-md-12">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> 3 Meses
+            <input type="radio" name="options" id="option1" autocomplete="off" checked (click)="getStats(3)"> 3 Meses
           </label>
           <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> 6 Meses
+            <input type="radio" name="options" id="option2" autocomplete="off" (click)="getStats(6)"> 6 Meses
           </label>
           <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> 12 Meses
+            <input type="radio" name="options" id="option3" autocomplete="off" (click)="getStats(12)"> 12 Meses
           </label>
           </div>
         </div>

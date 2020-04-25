@@ -28,9 +28,7 @@ export class RequisicionComponent implements OnInit {
   }
 
   ngOnInit() {
-    /* this.authService.getCurrentUser().subscribe((res: UsuarioModel) => {
-     *   this.usuario = res;
-     * }); */
+
   }
 
   obtenerRequisicionPorID(id: string) {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Chart } from "chart.js";
-import { ReqisicionesService } from 'src/app/services/reqisiciones.service';
+import { ReqisicionesService } from "src/app/services/reqisiciones.service";
+import { ReportesService } from "src/app/services/reportes.service";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
   selector: "app-reportes",
@@ -8,13 +10,29 @@ import { ReqisicionesService } from 'src/app/services/reqisiciones.service';
   styleUrls: ["./reportes.component.css"],
 })
 export class ReportesComponent implements OnInit {
-  constructor(public requesiciones:ReqisicionesService) {}
+  constructor(
+    public requesiciones: ReqisicionesService,
+    public reporteService: ReportesService,
+    public auth: AuthService
+  ) {}
+
+  approvedCounter = {};
+  deniedCounter = 0;
 
   ngOnInit() {
     this.chartInit();
   }
- 
-  chartInit() {
+
+  async getStats() {
+    // this.reporteService.obtenerCounter({ status: 2 }).subscribe((data: any) => {
+    //   this.approvedCounter = data;
+    //   console.log(this.approvedCounter);
+    // });
+    this.approvedCounter = (await this.reporteService.obtenerCounter({status:2}).toPromise());
+  }
+
+  async chartInit() {
+    await this.getStats();
     //Initialize Bar Chart
     var barChart = new Chart("barChart", {
       type: "bar",
@@ -28,10 +46,7 @@ export class ReportesComponent implements OnInit {
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
             ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-            ],
+            borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
             borderWidth: 1,
           },
         ],
@@ -48,7 +63,7 @@ export class ReportesComponent implements OnInit {
         },
       },
     });
-
+    console.log("Hola" + this.approvedCounter);
     //Initialize Pie Chart
     var pieChart = new Chart("pieChart", {
       type: "pie",
@@ -56,16 +71,13 @@ export class ReportesComponent implements OnInit {
         labels: ["Rechazadas", "Aprobadas"],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19],
+            label: "Solicitudes",
+            data: [this.deniedCounter, this.approvedCounter],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(75, 192, 192, 0.2)",
             ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(75, 192, 192, 1)",
-            ],
+            borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
             borderWidth: 1,
           },
         ],
