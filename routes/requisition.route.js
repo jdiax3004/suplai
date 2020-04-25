@@ -4,7 +4,6 @@ const router = express.Router();
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-
 //Methods
 const { ensureAuthenticated } = require("../auth");
 
@@ -330,16 +329,60 @@ async function notifyRequisitionUpdate(requisition) {
 	});
 	// send mail with defined transport object
 	const outputaboutrequest = `
-									<h3>Hola ${buyer.name},</h3>
-									<p>Hay novedades con respecto a su requisicion [ID: ${requisition._id}],</p>
-									<p>Le informamos que su requisicion ha sido ${isDenied} por el ${isBoss} '${checker.name} [ID: ${checker._id}]' </p>
-									<p>(Titulo: ${requisition.title}):</p>
-									<p>ID Requisicion: ${requisition._id}</p>
-									<p>Estado:<strong>${isDenied} por ${isBoss} ${checker.name} [ID: ${checker._id}] </strong> </p>
-									<p>Para proceder a evaluar esta solicitud con mayor detalle, puede ingresar al siguiente enlace:</p>
-									<p>${requisitionurl}</p>
-									<h4>Estamos para Servirle,</h4>
-									<p>Equipo de Suplai</p>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
+        <tr height="200px">  
+            <td bgcolor="" width="600px">
+                <h1 style="color: #FFF; text-align:center">¡Cambios en tu Requisición!</h1>
+                <p  style="color: #FFF; text-align:center">
+                    <span style="color: rgb(107, 139, 236)">${buyer.name}</span> 
+                     , hay novedades con respecto a tu solicitud 
+                    <span style="color: rgb(107, 139, 236)">${requisition._id}</span> 
+                </p>
+                <p  style="color: #FFF; text-align:center">
+                Detalles:
+            </p>
+            <p  style="color: #FFF; text-align:center">
+           
+               Título: 
+                <span style="color: rgb(107, 139, 236)">${requisition.title}</span> 
+            </p>
+            <p  style="color: #FFF; text-align:center">
+           
+               Precio: 
+		<span style="color: rgb(107, 139, 236)">${requisition.budget} CRC</span> 
+            </p>
+
+             <p  style="color: #FFF; text-align:center">
+           
+                URL: 
+                 <span style="color: rgb(107, 139, 236)">${requisitionurl}</span> 
+             </p>
+
+             <p  style="color: #FFF; text-align:center">
+           
+                Estado: 
+		 <span style="color: rgb(107, 139, 236)">${isDenied}</span> por el ${isBoss}, ${checker.name} [ID: ${checker._id}]
+             </p>
+      
+            </td>
+        </tr>
+        <tr bgcolor="#FFF">
+            <td style="text-align:center">
+                <p style="color: #4169E1">¡En caso de ayuda visita www.suplai.com!</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
 									`;
 	let info = transporter.sendMail({
 		from: '"Equipo de Suplai " ' + emailsuplai, // sender address
@@ -357,6 +400,12 @@ async function notifyRequisitionUpdate(requisition) {
 	});
 	console.log("Message sent: %s", info.messageId);
 	// Message sent: <blabla@example.com>
+}
+function loadTemplate(templateName, contexts) {
+	let template = new EmailTemplate(
+		path.join(__dirname, "templates", templateName)
+	);
+	return Promise.all();
 }
 
 module.exports = router;
