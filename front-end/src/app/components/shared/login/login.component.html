@@ -1,16 +1,21 @@
 <div class="login-page" style="min-height: 512.391px;">
   <div class="login-box">
     <div class="login-logo">
-		<img
-		src="assets/dist/img/suplaivertical.png"
-		alt="suplai-blanco2"
-		height="60%"
-		width="60%"
-	  /> 
+      <img
+        src="assets/dist/img/suplaivertical.png"
+        alt="suplai-blanco2"
+        height="60%"
+        width="60%"
+      />
     </div>
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
+        <div *ngIf="showErrorMessage">
+          <h6>
+            Credenciales Invalidos
+          </h6>
+        </div>
         <p class="login-box-msg">Iniciar Sesión</p>
 
         <form

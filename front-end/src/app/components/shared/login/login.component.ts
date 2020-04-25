@@ -11,6 +11,7 @@ import { AuthService } from "src/app/services/auth.service";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
+  showErrorMessage = false;
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -20,17 +21,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(form: NgForm) {
+    this.showErrorMessage = false;
     this.loginService.logIn(form.value.email, form.value.password).subscribe(
       (data: UsuarioModel) => {
         this.auth.currentUser = data;
-        if(data.type == "admin"){
+        if (data.type == "admin") {
           this.router.navigate(["/home"]);
-        }else{
+        } else {
           this.router.navigate(["/requisiciones"]);
         }
-        
       },
       err => {
+        this.showErrorMessage = true;
         console.log(err);
       }
     );
