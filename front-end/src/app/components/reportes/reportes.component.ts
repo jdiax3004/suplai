@@ -16,8 +16,8 @@ export class ReportesComponent implements OnInit {
     public auth: AuthService
   ) {}
 
-  approvedCounter = 0;
-  deniedCounter = 0;
+  approvedCounter = {};
+  deniedCounter = {};
 
   ngOnInit() {
     this.chartInit();
@@ -42,16 +42,16 @@ export class ReportesComponent implements OnInit {
     var barChart = new Chart("barChart", {
       type: "bar",
       data: {
-        labels: ["Red", "Blue"],
+        labels: ["Rechazadas", "Aprobadas"],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19],
+            label: ["Rechazadas","Aprobadas"],
+            data: [this.deniedCounter, this.approvedCounter],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)"
+              "rgba(75, 192, 192, 0.2)"
             ],
-            borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+            borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
             borderWidth: 1
           }
         ]
