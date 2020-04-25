@@ -60,10 +60,23 @@ router.get("/requisitions/counter", async (req, res) => {
 	var time = new Date();
 	time.setMonth(time.getMonth() - filters.time);
 	console.log(time);
+	var requisitions;
 
-	var requisitions = await Requisition.find({
-		status: req.query.status
-	});
+	if (req.user.type.toUpperCase() === "ADMIN") {
+		requisitions = await Requisition.find({
+			status: req.query.status
+		});
+	} else {
+		requisitions = await Requisition.find({
+			status: req.query.status,
+			checker: req.user._id
+		}).populate({
+			path: "owner",
+			populate: {
+				path: "boss"
+			}
+		});
+	}
 	const count = requisitions.reduce((count, requisition) => {
 		return requisition.createdAt >= time &&
 			requisition.createdAt <= Date.now()
