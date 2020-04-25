@@ -10,17 +10,25 @@ import { AuthService } from "src/app/services/auth.service";
   styleUrls: ["./reportes.component.css"]
 })
 export class ReportesComponent implements OnInit {
+  requisicionces: any[] = [];
+  
   constructor(
     public requesiciones: ReqisicionesService,
     public reporteService: ReportesService,
     public auth: AuthService
-  ) {}
+  ) {
+
+    requesiciones.obtenerRequisiones().subscribe((data: any) => {
+      this.requisicionces = data;
+  });
+}
+
 
   approvedCounter = {};
   deniedCounter = {};
 
   ngOnInit() {
-    this.chartInit();
+    this.getStats(3);
   }
 
   async getStats(interval?: number) {
@@ -34,10 +42,11 @@ export class ReportesComponent implements OnInit {
     this.deniedCounter = await this.reporteService
       .obtenerCounter({ status: 3, time: interval })
       .toPromise();
+      this.chartInit();
   }
 
   async chartInit() {
-    await this.getStats(3);
+
     //Initialize Bar Chart
     var barChart = new Chart("barChart", {
       type: "bar",
