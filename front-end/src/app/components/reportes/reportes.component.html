@@ -207,8 +207,8 @@
                 </div>
                 <div class="card-body">
                   <div class="chart">
-                    <canvas id="barChart"
-                      style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <canvas id="financer3"
+                      style="min-height: 250px; height: 250px; max-height: 100%; max-width: 100%;"></canvas>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -218,75 +218,56 @@
             <!-- /.col (RIGHT) -->
           </div>
 
-
-
-
-        </div>
-        <p></p>
-        <div class="container-fluid">
           <div class="row">
-            <div class="col-12">
-              <div class="card">
+            <!-- /.col (LEFT) -->
+            <div class="col-md-12">
+              <!-- BAR CHART -->
+              <div class="card card-secondary">
                 <div class="card-header">
-                  <h3 class="card-title">Requisiciones </h3>
-    
+                  <h3 class="card-title">Ganancias Financieras</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
                   </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                  <table class="table table-head-fixed text-nowrap">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Encargado</th>
-                        <th>Jefe</th>
-                        <th>Titulo</th>
-                        <th>Descripcion</th>
-                        <th>Costo</th>
-                        <th>Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        *ngFor="let requisicion of this.requisicionces"
-                        [routerLink]="['/requisicion', requisicion._id]"
-                      >
-                        <td>{{ requisicion._id | slice: -5 }}</td>
-                        <td>
-                          {{
-                            requisicion.owner.name +
-                              " " +
-                              requisicion.owner.last_name
-                          }}
-                        </td>
-                        <td>
-                          {{
-                            requisicion.owner.boss.name +
-                              " " +
-                              requisicion.owner.boss.last_name
-                          }}
-                        </td>
-                        <td>{{ requisicion.title }}</td>
-                        <td>{{ requisicion.description }}</td>
-                        <td>{{ requisicion.budget }}</td>
-                        <td>
-                          {{ requisicion.status | status }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas id="financer6"
+                      style="min-height: 250px; height: 250px; max-height: 100%; max-width: 100%;"></canvas>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
             </div>
-
+            <!-- /.col (RIGHT) -->
           </div>
-
+          <div class="row">
+            <!-- /.col (LEFT) -->
+            <div class="col-md-12">
+              <!-- BAR CHART -->
+              <div class="card card-secondary">
+                <div class="card-header">
+                  <h3 class="card-title">Ganancias Financieras</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart">
+                    <canvas id="financer12"
+                      style="min-height: 250px; height: 250px; max-height: 100%; max-width: 100%;"></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col (RIGHT) -->
+          </div>
 
 
 

@@ -89,5 +89,112 @@ export class ReportesComponent implements OnInit {
       },
       options: {}
     });
+
+    var financer3 = new Chart("financer3", {
+      type: "bar",
+      data: {
+        labels: ['Febrero 20','Marzo 20','Abril 20'],
+        datasets: [
+          {
+            label: "Ganancias por Mes",
+            data: [2,2,2],
+            backgroundColor: [
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)"
+            ],
+            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
+    });
+
+    var financer6 = new Chart("financer6", {
+      type: "bar",
+      data: {
+        labels: ['Noviembre 19','Diciembre 19','Enero 20','Febrero 20','Marzo 20','Abril 20'],
+        datasets: [
+          {
+            label: "Ganancias por Mes",
+            data: [2,2,2,2,2,2],
+            backgroundColor: [
+
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)"
+            ],
+            borderColor: [ 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
+    });
+
+    var financer12 = new Chart("financer12", {
+      type: "bar",
+      data: {
+        labels: ['Abril 19', 'Mayo 19','Junio 19','Julio 19','Agosto 19','Setiembre 19','Octubre 19','Noviembre 19','Diciembre 19','Enero 20','Febrero 20','Marzo 20','Abril 20'],
+        datasets: [
+          {
+            label: "Ganancias por Mes",
+            data: [2,2,2,2,2,2,2,2,2,2,2,2,2],
+            backgroundColor: [
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)"
+            ],
+            borderColor: [ 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
+    });
+
   }
 }
