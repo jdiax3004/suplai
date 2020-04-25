@@ -66,15 +66,23 @@ router.get("/requisitions/counter", async (req, res) => {
 			status: req.query.status
 		});
 	} else {
-		requisitions = await Requisition.find({
-			status: req.query.status,
-			checker: req.user._id
-		}).populate({
-			path: "owner",
-			populate: {
-				path: "boss"
-			}
-		});
+		if (req.user.type.toUpperCase() === "FINANCER") {
+			requisitions = await Requisition.find({
+				status: req.query.status,
+				checker: req.user._id
+			}).populate({
+				path: "owner",
+				populate: {
+					path: "boss"
+				}
+			});
+		} else {
+			requisitions = await Requisition.find({
+				status: req.query.status
+			}).populate({
+				path: "owner"
+			});
+		}
 	}
 	const count = requisitions.reduce((count, requisition) => {
 		return requisition.createdAt >= time &&
