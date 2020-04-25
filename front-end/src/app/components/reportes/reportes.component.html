@@ -17,73 +17,99 @@
   <div class="card card-primary card-outline">
     <div class="card-header">
       <div class="card-title">
-        <label>Fecha del Reporte  </label>
+        <label>Fecha del Reporte </label>
       </div>
       <div class="card-tools">
-      <div class="col-md-12">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked (click)="getStats(3)"> 3 Meses
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off" (click)="getStats(6)"> 6 Meses
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off" (click)="getStats(12)"> 12 Meses
-          </label>
+        <div class="col-md-12">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active" (click)="getStats(3)">
+              <input
+                type="radio"
+                name="options"
+                id="option1"
+                autocomplete="off"
+                checked
+                (click)="getStats(3)"
+              />
+              3 Meses
+            </label>
+            <label class="btn btn-secondary" (click)="getStats(6)">
+              <input
+                type="radio"
+                name="options"
+                id="option2"
+                autocomplete="off"
+                (click)="getStats(6)"
+              />
+              6 Meses
+            </label>
+            <label class="btn btn-secondary" (click)="getStats(12)">
+              <input
+                type="radio"
+                name="options"
+                id="option3"
+                autocomplete="off"
+                (click)="getStats(12)"
+              />
+              12 Meses
+            </label>
           </div>
         </div>
       </div>
-
     </div>
     <div class="card-body">
-
-
       <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-6">
-
-
               <!-- DONUT CHART -->
               <div class="card card-danger">
                 <div class="card-header">
                   <h3 class="card-title">Pie Chart</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse"
+                    >
+                      <i class="fas fa-minus"></i>
                     </button>
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="pieChart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <canvas
+                    id="pieChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"
+                  ></canvas>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
-
-
-
             </div>
             <!-- /.col (LEFT) -->
             <div class="col-md-6">
-
-
               <!-- BAR CHART -->
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Bar Chart</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    <button
+                      type="button"
+                      class="btn btn-tool"
+                      data-card-widget="collapse"
+                    >
+                      <i class="fas fa-minus"></i>
                     </button>
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="chart">
-                    <canvas id="barChart"
-                      style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <canvas
+                      id="barChart"
+                      style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"
+                    ></canvas>
                   </div>
                 </div>
                 <!-- /.card-body -->

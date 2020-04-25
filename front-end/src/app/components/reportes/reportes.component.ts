@@ -7,7 +7,7 @@ import { AuthService } from "src/app/services/auth.service";
 @Component({
   selector: "app-reportes",
   templateUrl: "./reportes.component.html",
-  styleUrls: ["./reportes.component.css"],
+  styleUrls: ["./reportes.component.css"]
 })
 export class ReportesComponent implements OnInit {
   constructor(
@@ -16,23 +16,28 @@ export class ReportesComponent implements OnInit {
     public auth: AuthService
   ) {}
 
-  approvedCounter = {};
+  approvedCounter = 0;
   deniedCounter = 0;
 
   ngOnInit() {
     this.chartInit();
   }
 
-  async getStats() {
+  async getStats(interval?: number) {
     // this.reporteService.obtenerCounter({ status: 2 }).subscribe((data: any) => {
     //   this.approvedCounter = data;
     //   console.log(this.approvedCounter);
     // });
-    this.approvedCounter = (await this.reporteService.obtenerCounter({status:2}).toPromise());
+    this.approvedCounter = await this.reporteService
+      .obtenerCounter({ status: 2, time: interval })
+      .toPromise();
+    this.deniedCounter = await this.reporteService
+      .obtenerCounter({ status: 3, time: interval })
+      .toPromise();
   }
 
   async chartInit() {
-    await this.getStats();
+    await this.getStats(3);
     //Initialize Bar Chart
     var barChart = new Chart("barChart", {
       type: "bar",
@@ -44,24 +49,24 @@ export class ReportesComponent implements OnInit {
             data: [12, 19],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
+              "rgba(54, 162, 235, 0.2)"
             ],
             borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-            borderWidth: 1,
-          },
-        ],
+            borderWidth: 1
+          }
+        ]
       },
       options: {
         scales: {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
     });
     console.log("Hola" + this.approvedCounter);
     //Initialize Pie Chart
@@ -75,14 +80,14 @@ export class ReportesComponent implements OnInit {
             data: [this.deniedCounter, this.approvedCounter],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
+              "rgba(75, 192, 192, 0.2)"
             ],
             borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
-            borderWidth: 1,
-          },
-        ],
+            borderWidth: 1
+          }
+        ]
       },
-      options: {},
+      options: {}
     });
   }
 }
