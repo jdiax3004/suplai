@@ -4,7 +4,6 @@ const router = express.Router();
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-
 //Methods
 const { ensureAuthenticated } = require("../auth");
 
@@ -56,20 +55,42 @@ router.get("/requisitions/stats", async (req, res) => {
 });
 
 router.get("/requisitions/counter", async (req, res) => {
-  let filters = req.query ? req.query : {};
-  var time = new Date();
-  time.setMonth(time.getMonth() - filters.time);
-  console.log(time);
+	let filters = req.query ? req.query : {};
+	var time = new Date();
+	time.setMonth(time.getMonth() - filters.time);
+	console.log(time);
+	var requisitions;
 
-  var requisitions = await Requisition.find({
-    status: req.query.status,
-  });
-  const count = requisitions.reduce((count, requisition) => {
-    return requisition.createdAt >= time && requisition.createdAt <= Date.now()
-      ? count + 1
-      : count;
-  }, 0);
-  res.status(200).json(count);
+	if (req.user.type.toUpperCase() === "ADMIN") {
+		requisitions = await Requisition.find({
+			status: req.query.status
+		});
+	} else {
+		if (req.user.type.toUpperCase() === "FINANCER") {
+			requisitions = await Requisition.find({
+				status: req.query.status,
+				checker: req.user._id
+			}).populate({
+				path: "owner",
+				populate: {
+					path: "boss"
+				}
+			});
+		} else {
+			requisitions = await Requisition.find({
+				status: req.query.status
+			}).populate({
+				path: "owner"
+			});
+		}
+	}
+	const count = requisitions.reduce((count, requisition) => {
+		return requisition.createdAt >= time &&
+			requisition.createdAt <= Date.now()
+			? count + 1
+			: count;
+	}, 0);
+	res.status(200).json(count);
 });
 
 //[GET] Read a Specific Requisition
@@ -285,34 +306,81 @@ async function notifyBossNewRequisition(newReq) {
 }
 //Notify Buyer about a Requisition Update
 async function notifyRequisitionUpdate(requisition) {
-  const checker = await User.findById(requisition.checker._id);
-  const buyer = await User.findById(requisition.owner._id);
-  const isDenied = requisition.status === 3 ? "Denegada" : "Aprobada";
-  const isBoss =
-    checker.type === "BOSS" ? "Jefe Aprobador" : "Aprobador Financiero";
-  const emailsuplai = "noreplysuplaicr@gmail.com";
-  const requisitionurl = "http://localhost:4200/requisicion/" + requisition._id;
-  let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "noreplysuplaicr@gmail.com", // generated ethereal user
-      pass: "suplainoreply123", // generated ethereal password
-    },
-  });
-  // send mail with defined transport object
-  const outputaboutrequest = `
-									<h3>Hola ${buyer.name},</h3>
-									<p>Hay novedades con respecto a su requisicion [ID: ${requisition._id}],</p>
-									<p>Le informamos que su requisicion ha sido ${isDenied} por el ${isBoss} '${checker.name} [ID: ${checker._id}]' </p>
-									<p>(Titulo: ${requisition.title}):</p>
-									<p>ID Requisicion: ${requisition._id}</p>
-									<p>Estado:<strong>${isDenied} por ${isBoss} ${checker.name} [ID: ${checker._id}] </strong> </p>
-									<p>Para proceder a evaluar esta solicitud con mayor detalle, puede ingresar al siguiente enlace:</p>
-									<p>${requisitionurl}</p>
-									<h4>Estamos para Servirle,</h4>
-									<p>Equipo de Suplai</p>
+	const checker = await User.findById(requisition.checker._id);
+	const buyer = await User.findById(requisition.owner._id);
+	const isDenied = requisition.status === 3 ? "Denegada" : "Aprobada";
+	const isBoss =
+		checker.type === "BOSS"
+			? "Jefe Aprobador"
+			: "Aprobador Financiero";
+	const emailsuplai = "noreplysuplaicr@gmail.com";
+	const requisitionurl =
+		"http://localhost:4200/requisicion/" + requisition._id;
+	let transporter = nodemailer.createTransport({
+		host: "smtp.gmail.com",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: "noreplysuplaicr@gmail.com", // generated ethereal user
+			pass: "suplainoreply123" // generated ethereal password
+		}
+	});
+	// send mail with defined transport object
+	const outputaboutrequest = `
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
+        <tr height="200px">  
+            <td bgcolor="" width="600px">
+                <h1 style="color: #FFF; text-align:center">¡Cambios en tu Requisición!</h1>
+                <p  style="color: #FFF; text-align:center">
+                    <span style="color: rgb(107, 139, 236)">${buyer.name}</span> 
+                     , hay novedades con respecto a tu solicitud 
+                    <span style="color: rgb(107, 139, 236)">${requisition._id}</span> 
+                </p>
+                <p  style="color: #FFF; text-align:center">
+                Detalles:
+            </p>
+            <p  style="color: #FFF; text-align:center">
+           
+               Título: 
+                <span style="color: rgb(107, 139, 236)">${requisition.title}</span> 
+            </p>
+            <p  style="color: #FFF; text-align:center">
+           
+               Precio: 
+		<span style="color: rgb(107, 139, 236)">${requisition.budget} CRC</span> 
+            </p>
+
+             <p  style="color: #FFF; text-align:center">
+           
+                URL: 
+                 <span style="color: rgb(107, 139, 236)">${requisitionurl}</span> 
+             </p>
+
+             <p  style="color: #FFF; text-align:center">
+           
+                Estado: 
+		 <span style="color: rgb(107, 139, 236)">${isDenied}</span> por el ${isBoss}, ${checker.name} [ID: ${checker._id}]
+             </p>
+      
+            </td>
+        </tr>
+        <tr bgcolor="#FFF">
+            <td style="text-align:center">
+                <p style="color: #4169E1">¡En caso de ayuda visita www.suplai.com!</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
 									`;
   let info = transporter.sendMail({
     from: '"Equipo de Suplai " ' + emailsuplai, // sender address
@@ -330,6 +398,12 @@ async function notifyRequisitionUpdate(requisition) {
   });
   console.log("Message sent: %s", info.messageId);
   // Message sent: <blabla@example.com>
+}
+function loadTemplate(templateName, contexts) {
+	let template = new EmailTemplate(
+		path.join(__dirname, "templates", templateName)
+	);
+	return Promise.all();
 }
 
 //[GET] Read Requisitions
